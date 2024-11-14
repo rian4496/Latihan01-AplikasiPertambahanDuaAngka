@@ -1,4 +1,5 @@
 
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /*
@@ -16,6 +17,35 @@ public class AplikasiPetambahanDuaAngka extends javax.swing.JFrame {
      */
     public AplikasiPetambahanDuaAngka() {
         initComponents();
+        batasiInputAngka(txtAngka1);
+        batasiInputAngka(txtAngka2);
+        bersihkanSaatFokus(txtAngka1);
+        bersihkanSaatFokus(txtAngka2);
+        bersihkanSaatFokus(txtHasil);
+    }
+
+    private void bersihkanSaatFokus(javax.swing.JTextField textField) {
+        textField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textField.setText(""); // Mengosongkan teks ketika field mendapatkan fokus
+            }
+        });
+    }
+
+    private void batasiInputAngka(javax.swing.JTextField textField) {
+        textField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                char karakter = evt.getKeyChar();
+
+                // Memeriksa apakah karakter bukan angka atau bukan backspace
+                // Memeriksa apakah karakter bukan angka dan bukan karakter kontrol (seperti backspace)
+                if (!Character.isDigit(karakter) && karakter != KeyEvent.VK_BACK_SPACE) {
+                    evt.consume(); // Mengabaikan karakter yang bukan angka atau backspace
+                    JOptionPane.showMessageDialog(null, "Input hanya boleh angka", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
     }
 
     private String tambahDuaAngka(String angka1, String angka2) {
@@ -153,10 +183,10 @@ public class AplikasiPetambahanDuaAngka extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
-       txtAngka1.setText("");
-       txtAngka2.setText("");
-       txtHasil.setText("");
-       txtAngka1.requestFocus();
+        txtAngka1.setText("");
+        txtAngka2.setText("");
+        txtHasil.setText("");
+        txtAngka1.requestFocus();
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
